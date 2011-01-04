@@ -1,10 +1,6 @@
-$LOAD_PATH.unshift(File.expand_path('../../lib', __FILE__))
+#$LOAD_PATH.unshift(File.expand_path('../../lib', __FILE__))
 require 'mongo_mapper'
-#require 'pp'
 
-#MongoMapper.database = 'testing'
-
-# To create your own plugin, just create a module.
 module MongoMapper
 	module Plugins
 		module Draft
@@ -20,7 +16,7 @@ module MongoMapper
 					self.draft
 				end
 				
-				def is_published?
+				def published?
 					if draft?
 	    			if (self.class.find(self.draft_record_published_id) != nil)
 	    				true

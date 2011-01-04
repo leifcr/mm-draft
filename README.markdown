@@ -4,10 +4,10 @@ Plugin for MongoMapper to have draft/published option on models.
 
 ##Instance methods
 <pre>
-.is_published?    - true/false)
+.draft?           - true/false
+.published?       - true/false
 .published_record - returns the published record) (or nil, if the document never has been published)
 .draft_record     - returns the draft record for a published record
-.draft?           - returns true if the current record is draft
 </pre>
 
 *draft_record* will return self if the draft? returns true
@@ -27,6 +27,8 @@ All records will be duplicated (draft + published) in the DB instead of beeing e
 Duplicating the records also gives the benefit of working directly on the published record. (although this isn't recommended, as it kind of breaks the draft/published structure)
 
 ## Example
+
+### Model
 <pre>
 class Monkey
   include MongoMapper::Document
@@ -34,7 +36,9 @@ class Monkey
 
   key :name, String, :default => "test"
 end
-
+</pre>
+### Usage of model
+<pre>
 m = Monkey.new
 m.name = "Leif"
 m.save
