@@ -1,0 +1,46 @@
+mm_draft
+========
+
+Plugin for MongoMapper to have draft/published option on models.
+
+Provides this functionality:
+.is_published? (true/false)
+.published_model (returns the published record) (or nil, if the document never has been published)
+
+Usage:
+.save - Saves draft (with normal validation)
+
+.publish - Saves the current record as draft, creates a new published record (returns true/false, depending on validation of draft record)
+
+Validation is skipped on the published record, as the draft record should be checked for validations when saving.
+
+All records will be duplicated (draft + published) in the DB instead of beeing embedded documents, as embedding would limit the size to half of what MongoDB is capable of.
+
+Duplicating the records also gives the benefit of working directly on the published record. (although this isn't recommended, as it kind of breaks the draft/published structure)
+
+Example
+=======
+
+class Monkey
+  include MongoMapper::Document
+  plugin MongoMapper::Draft
+
+  key :name, String, :default => "test"
+end
+
+m = Monkey.new
+m.name = "Leif"
+m.save
+
+m.is_published? (will return false)
+m.publish (will return true/false)
+
+m.name = "Artn"
+m.save
+
+m.name # returns "Artn"
+
+m.published_model.name # returns "Leif"
+
+
+Copyright (c) 2010 Leif Ringstad, released under the MIT license
