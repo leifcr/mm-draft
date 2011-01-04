@@ -4,8 +4,12 @@ mm_draft
 Plugin for MongoMapper to have draft/published option on models.
 
 Provides this functionality:
-.is_published? (true/false)
-.published_model (returns the published record) (or nil, if the document never has been published)
+.is_published? - true/false)
+.published_record - returns the published record) (or nil, if the document never has been published)
+.draft_record - returns the draft record for a published record
+.draft? - returns true if the current record is draft
+
+both draft_record and published_record will return self if the
 
 Usage:
 .save - Saves draft (with normal validation)
