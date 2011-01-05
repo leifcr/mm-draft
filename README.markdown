@@ -2,6 +2,8 @@
 
 Plugin for MongoMapper to have draft/published option on models.
 
+Works with ramdiv-mongo_mapper_acts_as_tree.
+
 ##Instance methods
 <pre>
 .draft?           - true/false
