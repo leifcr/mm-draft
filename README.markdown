@@ -55,4 +55,4 @@ m.published_model.name # returns "Leif"
 </pre>
 
 
-Copyright (c) 2010 Leif Ringstad, released under the MIT license
+Copyright (c) 2011 Leif Ringstad, released under the MIT license
