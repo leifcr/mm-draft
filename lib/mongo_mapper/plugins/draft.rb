@@ -19,25 +19,64 @@ module MongoMapper
 				def published?
 					if draft?
 	    			if (self.class.find(self.draft_record_published_id) != nil)
-	    				true
+	    				return true
   					end
     			else
-    				true
+    				return true
 					end
 					false
 				end
 		    
 		    def publish
-		    	if (self.changed?)
+		    	if (draft? == false) # don't publish non-drafts... 
+		    		return false
+	    		end
+	    		
+		    	if (self.changed?) # save any changes, in case publish is called directly instead of save
 		    		if (self.save == false)
 		    			return false
 		    		end
 	    		end
-	    		live_model = self.clone
-		    	self.draft_record_published_id = live_model._id
+
+					rec = nil
+	    		# remove parents from previous published record
+	    		if (self.respond_to?("parent_id_field") && self.respond_to?("path_field") && self.respond_to?("depth_field"))
+		    		if (self.published?)
+		    			#keep id
+		    			rec = self.published_record
+		    			rec.parent = nil
+		    			rec.save
+	    			end
+    			end
+	    		
+	    		live_record = self.clone
+	    		
+	    		if (rec != nil)
+	    			live_record._id = rec._id
+    			end
+    			
+		    	self.draft_record_published_id = live_record._id
 		    	self.save!
-		    	live_model.draft = false;
-		    	live_model.save!
+
+		  		# check if ramdiv-acts_as_tree is present
+	    		if (self.respond_to?("parent_id_field") && self.respond_to?("path_field") && self.respond_to?("depth_field"))
+		    		# if so, removee the current parent
+		    		# set parent to nil for live_record before setting "real" parent.
+		    		live_record.parent = nil
+	    			
+		    		if (self.parent != nil)
+			    		# no need to copy order value, as it's copied in the clone process
+			    		# check draft.parent.published_record != nil, and set as parent
+			    		if (self.parent != nil)
+			    			if (self.parent.published_record != nil)
+			    				live_record.parent = self.parent.published_record
+		    				end
+		    			end
+	    			end
+    			end
+    			
+	      	live_record.draft = false;
+		    	live_record.save!
 		    	return true
 	    	end
 	    	

@@ -24,29 +24,25 @@ Gem::Specification.new do |s|
 
   s.require_paths 		 = ["lib"]
 
-  if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
-    s.specification_version = 3
-
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<mongo_mapper>, [">= 0.8.6"])
-      s.add_development_dependency(%q<rspec>, [">= 1.3.0"])
-      s.add_development_dependency(%q<rake>, [">= 0.0.0"])
-    else
-      s.add_dependency(%q<mongo_mapper>, [">= 0.8.6"])
-      s.add_dependency(%q<rspec>, [">= 1.3.0"])
-      s.add_dependency(%q<rake>, [">= 0.0.0"])
-    end
-  else
-    s.add_dependency(%q<mongo_mapper>, [">= 0.8.6"])
-    s.add_dependency(%q<rspec>, [">= 1.3.0"])
-    s.add_dependency(%q<rake>, [">= 0.0.0"])
-  end
-
-#  s.add_dependency 'mongo_mapper',            '~> 0.8.6' # only tested with rails3 branch...
-
-#  s.add_development_dependency 'rake'
-#  s.add_development_dependency 'shoulda',           '~> 2.11'
-#  s.add_development_dependency 'timecop',           '~> 0.3.1'
-#  s.add_development_dependency 'mocha',             '~> 0.9.8'
+#  if s.respond_to? :specification_version then
+#    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
+#    s.specification_version = 3
+#
+#    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+#      s.add_runtime_dependency(%q<mongo_mapper>, [">= 0.8.6"])
+#      #s.add_development_dependency(%q<rspec>, [">= 1.3.0"])
+#      #s.add_development_dependency(%q<rake>, [">= 0.0.0"])
+#      s.add_development_dependency(%q<shoulda>, [">= 2.10.2"])
+#    else
+#      s.add_dependency(%q<mongo_mapper>, [">= 0.8.6"])
+#      #s.add_dependency(%q<rspec>, [">= 1.3.0"])
+#      #s.add_dependency(%q<rake>, [">= 0.0.0"])
+#	    s.add_dependency(%q<shoulda>, [">= 2.10.2"])
+#    end
+#  else
+#    s.add_dependency(%q<mongo_mapper>, [">= 0.8.6"])
+#    #s.add_dependency(%q<rspec>, [">= 1.3.0"])
+#    #s.add_dependency(%q<rake>, [">= 0.0.0"])
+#    s.add_dependency(%q<shoulda>, [">= 2.10.2"])
+#  end
 end
