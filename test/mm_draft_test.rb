@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'set'
 
-class TestMongomapperActsAsTree < Test::Unit::TestCase
+class MmDraftTest < Test::Unit::TestCase
   context "record" do
     setup do
     	@monkey_1   = Monkey.create(:name => "Chip")
