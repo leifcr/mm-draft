@@ -4,7 +4,7 @@ require 'mongo_mapper'
 module MongoMapper
 	module Plugins
 		module Draft
-		  
+ 		  extend ActiveSupport::Concern
 		  # ClassMethods module will automatically get extended
 		  module ClassMethods
 		  end
@@ -38,7 +38,7 @@ module MongoMapper
 		    		end
 	    		end
 
-					rec = nil
+				rec = nil
 	    		# remove parents from previous published record
 	    		if (self.respond_to?("parent_id_field") && self.respond_to?("path_field") && self.respond_to?("depth_field"))
 		    		if (self.published?)
@@ -60,7 +60,7 @@ module MongoMapper
 
 		  		# check if ramdiv-acts_as_tree is present
 	    		if (self.respond_to?("parent_id_field") && self.respond_to?("path_field") && self.respond_to?("depth_field"))
-		    		# if so, removee the current parent
+		    		# if so, remove the current parent
 		    		# set parent to nil for live_record before setting "real" parent.
 		    		live_record.parent = nil
 	    			
