@@ -1,5 +1,6 @@
 require "mongo_mapper"
-require "mongo_mapper_acts_as_tree"
+require "mm_draft"
+# require "mongo_mapper_acts_as_tree"
 
 class Monkey
   include MongoMapper::Document
