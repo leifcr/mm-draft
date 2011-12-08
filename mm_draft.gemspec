@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.summary            = 'Draft plugin for Mongo Mapper'
   s.authors            = ['Leif Ringstad']
   s.email              = ['leifcr@gmail.com']
-	s.version            = '0.1.2'
+	s.version            = '0.1.3'
 	#s.version            = MongoMapper::Plugins::Draft::VERSION
   s.platform           = Gem::Platform::RUBY
   # s.files              = Dir.glob("{lib,test}/**/*") + %w[LICENSE README.markdown]
