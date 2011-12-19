@@ -44,6 +44,48 @@ class MmDraftTest < Test::Unit::TestCase
       assert_not_nil(@monkey_1.published_record)
   		assert_equal(@monkey_1.name, @monkey_1.published_record.name)
 		end
+    
+    should "unpublish draft record" do
+      @monkey_1.unpublish
+      assert !@monkey_1.published?
+      assert_nil(@monkey_1.published_record_id)
+      assert_nil(@monkey_1.published_record)
+    end
+
+    should "unpublish published record directly" do
+      # It is recommended to unpublish a draft record instead of unpublising a published record
+      @monkey_1.publish # publish record again...
+      @monkey_1.published_record.unpublish
+      # reload monkey_1
+      @monkey_1.reload
+      assert !@monkey_1.published?
+      assert_nil(@monkey_1.published_record_id)
+      assert_nil(@monkey_1.published_record)
+    end
+
+    should "destroy published record only" do
+      @monkey_2.publish
+      tmp_id = @monkey_2.published_record_id
+      @monkey_2.published_record.destroy
+      @monkey_2.reload
+      assert_nil(@monkey_2.published_record_id)
+      assert_nil(@monkey_2.published_record)
+      assert_equal(@monkey_2.name, "Unaton") # make sure we didn't loose the draft
+      assert !@monkey_2.published?
+      assert @monkey_2.draft?
+      assert_nil(Monkey.find(tmp_id))
+    end
+
+    should "destroy draft and published record" do
+      @monkey_2.publish # publish record again...
+      tmp_draft_id = @monkey_2._id
+      tmp_published_id = @monkey_2.published_record_id
+      @monkey_2.destroy
+      # keep ID's in order to check that they are destroyed!
+      assert_nil(Monkey.find(tmp_draft_id))
+      assert_nil(Monkey.find(tmp_published_id))
+    end
+
 	end
 		
 	# context "tree-record" do
