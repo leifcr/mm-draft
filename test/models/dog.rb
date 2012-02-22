@@ -1,7 +1,8 @@
-require "mongo_mapper"
-require "mm_draft"
+require 'mm-tree'
+
 class Dog
   include MongoMapper::Document
   plugin MongoMapper::Plugins::Draft
+  plugin MongoMapper::Plugins::Tree
   key :name, String
 end

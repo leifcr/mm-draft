@@ -1,12 +1,16 @@
 require 'rubygems'
+require 'bundler/setup'
 require 'test/unit'
 require 'shoulda'
 
+Bundler.require(:development)
+
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
-require 'mongo_mapper'
+require 'mm-draft'
 
-MongoMapper.database = "mm_draft_test"
+
+MongoMapper.database = "mm-draft_test"
 
 Dir["#{File.dirname(__FILE__)}/models/*.rb"].each {|file| require file}
 
@@ -24,7 +28,4 @@ class Test::Unit::TestCase
     end
   end
   
-  def eql_arrays?(first, second)
-    first.collect(&:_id).to_set == second.collect(&:_id).to_set
-  end
 end
