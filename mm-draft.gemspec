@@ -16,7 +16,6 @@ Gem::Specification.new do |s|
   s.require_path 		   = 'lib'
 
   s.add_dependency 'mongo_mapper', '~> 0.11.0'
-  s.add_dependency 'mm-tree'
   s.add_development_dependency 'shoulda', '~> 2.11.3'
   s.add_development_dependency 'mm-tree'
 end
