@@ -39,30 +39,31 @@ module MongoMapper
         end
         
         if (self.changed?) # save any changes, in case publish is called directly instead of save
-            return false if (self.save == false)
+          return false if (self.save == false)
         end
 
-        # support for mm-tree
-        # remove parents from previous published record
-        if (self.respond_to?("parent_id_field") && self.respond_to?("path_field") && self.respond_to?("depth_field"))
-          if (self.published?)
-            #keep id
-            rec = self.published_record
-            rec.parent = nil
-            rec.save
-          end
-        end
         
-        # if already published, clone onto existing record..
+        # if already published, keep some old data to update instead of insert
         if (self.published?)
+          old_published_record = self.published_record
+          # support for mm-tree
+          # remove parents from previous published record
+          if (self.respond_to?("parent_id_field") && self.respond_to?("path_field") && self.respond_to?("depth_field"))
+            old_published_record.parent = nil
+            old_published_record.save
+          end
           live_record = self.clone
           live_record._id = self.published_record_id
+          live_record.created_at = old_published_record.created_at if self.respond_to?("created_at")
         else
           live_record = self.clone
+          live_record.created_at = Time.now.utc if self.respond_to?("created_at")
         end
 
         self.draft_record_published_id = live_record._id
+        self.class.skip_callback(:save, :before, :update_timestamps ) if self.respond_to?("updated_at")
         self.save!
+        self.class.set_callback(:save, :before, :update_timestamps ) if self.respond_to?("updated_at")
 
         if (self.respond_to?("parent_id_field") && self.respond_to?("path_field") && self.respond_to?("depth_field"))
           # if so, remove the current parent (should have already been don)
@@ -81,6 +82,7 @@ module MongoMapper
         end
         
         live_record.draft = false;
+        live_record.updated_at = Time.now.utc if self.respond_to?("updated_at")
         live_record.save!
         return true
       end

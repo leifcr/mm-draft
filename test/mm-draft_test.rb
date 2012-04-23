@@ -19,6 +19,13 @@ class MmDraftTest < Test::Unit::TestCase
       assert_not_nil(@monkey_1.published_record)
     end
     
+    should "not have same created time as draft" do
+      @monkey_1.unpublish 
+      sleep(1)
+      @monkey_1.publish
+      assert_not_equal(@monkey_1.created_at, @monkey_1.published_record.created_at)
+    end
+    
     should "not be published" do
     	assert !@monkey_2.published?
     	assert_nil(@monkey_2.published_record)
@@ -44,7 +51,15 @@ class MmDraftTest < Test::Unit::TestCase
       assert_not_nil(@monkey_1.published_record)
   		assert_equal(@monkey_1.name, @monkey_1.published_record.name)
 		end
-    
+
+    should "have updated updated_at both published record" do
+      @monkey_1.name ="Kake"
+      @monkey_1.save
+      sleep(2)
+      @monkey_1.publish
+      assert_not_equal(@monkey_1.published_record.updated_at, @monkey_1.updated_at)
+    end
+
     should "unpublish draft record" do
       @monkey_1.unpublish
       assert !@monkey_1.published?
