@@ -1,32 +1,36 @@
 require 'rubygems'
 require 'rake'
 
-require File.join(File.dirname(__FILE__), 'lib', 'version')
+require File.join(File.dirname(__FILE__), 'lib', 'mongo_mapper', 'plugins', 'draft', 'version')
 
 require 'rake/testtask'
 namespace :test do
-  Rake::TestTask.new(:unit) do |test|
+  Rake::TestTask.new(:units) do |test|
     test.libs << 'test'
     test.ruby_opts << '-rubygems'
     test.pattern = 'test/unit/**/test_*.rb'
-    test.verbose = true
+    test.verbose = true 
+  end
+
+#TODO Add performance
+  Rake::TestTask.new(:performance) do |test|
+    test.libs << 'test'
+    test.ruby_opts << '-rubygems'
+    test.pattern = 'test/performance/test/**/*.rb'
+    test.verbose = true 
   end
 end
 
-task :default => 'test:unit'
+task :default => 'test:units'
 
 desc 'Builds the gem'
 task :build do
   sh 'gem build mm-draft.gemspec'
   Dir.mkdir('pkg') unless File.directory?('pkg')
-  sh "mv mm-versioned-#{MongoMapper::Versioned::VERSION}.gem pkg/mm-draft-#{MongoMapper::Versioned::VERSION}.gem"
+  sh "mv mm-draft-#{MongoMapper::Draft::VERSION}.gem pkg/mm-draft-#{MongoMapper::Draft::VERSION}.gem"
 end
 
-#desc 'Generate documentation for the mm_drafts plugin.'
-#Rake::RDocTask.new(:rdoc) do |rdoc|
-#  rdoc.rdoc_dir = 'rdoc'
-#  rdoc.title    = 'Mongomapper Draft'
-#  rdoc.options << '--line-numbers' << '--inline-source'
-#  rdoc.rdoc_files.include('README.markdown')
-#  rdoc.rdoc_files.include('lib/**/*.rb')
-#end
+desc 'Builds and Installs the gem'
+task :install => :build do
+  sh "gem install pkg/mm-draft-#{MongoMapper::Draft::VERSION}.gem"
+end

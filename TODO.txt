@@ -1,0 +1,8 @@
+Change to states instead of true/false
+E.g. a writer should be able to write, a proofreader should be able to update and a publisher should be able to publish
+So it would be better to allow various states instead of published/not published
+
+Move all drafts to be saved in separate collection, as the collection becomes a bit "bloated" by having duplicate of all records
+
+Implement mm-tree again, however, the tree structure will be the "same" for drafts/non-drafts, as they will be in separate collections
+Since mm-tree is using rational values for the tree structure it's easy to publish only certain tree elements
