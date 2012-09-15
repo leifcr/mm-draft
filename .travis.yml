@@ -1,0 +1,14 @@
+gemfile:
+  - Gemfile
+language: ruby
+rvm:
+  - ree
+  - 1.9.3
+notifications:
+  email: false
+bundler_args: --without development
+branches:
+  except:
+    - development
+services:
+  - mongodb

@@ -1,19 +1,25 @@
-#require 'bundler'
-#Bundler::GemHelper.install_tasks
-
+require 'rubygems'
 require 'rake'
 
-desc 'Default: run unit tests.'
-task :default => :test
+require File.join(File.dirname(__FILE__), 'lib', 'version')
 
 require 'rake/testtask'
+namespace :test do
+  Rake::TestTask.new(:unit) do |test|
+    test.libs << 'test'
+    test.ruby_opts << '-rubygems'
+    test.pattern = 'test/unit/**/test_*.rb'
+    test.verbose = true
+  end
+end
 
-desc 'Test the mm_drafts plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = t
+task :default => 'test:unit'
+
+desc 'Builds the gem'
+task :build do
+  sh 'gem build mm-draft.gemspec'
+  Dir.mkdir('pkg') unless File.directory?('pkg')
+  sh "mv mm-versioned-#{MongoMapper::Versioned::VERSION}.gem pkg/mm-draft-#{MongoMapper::Versioned::VERSION}.gem"
 end
 
 #desc 'Generate documentation for the mm_drafts plugin.'
