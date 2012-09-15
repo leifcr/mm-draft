@@ -1,0 +1,6 @@
+en:
+  mongo_mapper:
+    errors:
+      messages:
+        versioned:
+          trying_to_update_old_version: "You are trying to update an old version of the %{model_name}. Newest version: %{newest_version_number} (%{newest_version_id}) Your version: %{old_version_number} (%{old_version_id})"
