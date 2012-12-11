@@ -3,7 +3,7 @@ require 'bundler/setup'
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
-require 'draft'
+require 'mm-draft'
 
 Bundler.require(:default, :test)
 
