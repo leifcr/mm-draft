@@ -44,8 +44,9 @@ module MongoMapper
             old_published_record.parent = nil
             old_published_record.save
           end
+          # destroy old published record... Not ideal, but should work
+          self.published_record.destroy! if self.published_record != nil
           live_record = self.clone
-          live_record._id = self.published_record_id
           live_record.created_at = old_published_record.created_at if self.respond_to?("created_at")
         else
           live_record = self.clone
