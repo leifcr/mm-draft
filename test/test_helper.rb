@@ -1,6 +1,14 @@
 require 'rubygems'
 require 'bundler/setup'
 
+if ENV['TRAVIS']
+  require 'coveralls'
+  Coveralls.wear!
+elsif ENV['COVERAGE']
+  require 'simplecov'
+  SimpleCov.start
+end
+
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'mm-draft'

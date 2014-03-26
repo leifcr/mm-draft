@@ -1,10 +1,10 @@
 # MongoMapper Draft plugin
+[![Build Status](https://travis-ci.org/leifcr/mm-draft.svg?branch=master)](https://travis-ci.org/leifcr/mm-draft) [![Coverage Status](https://coveralls.io/repos/leifcr/mm-draft/badge.png)](https://coveralls.io/r/leifcr/mm-draft) [![Dependency Status](https://gemnasium.com/leifcr/mm-draft.svg)](https://gemnasium.com/leifcr/mm-draft)
+
 
 Plugin for MongoMapper to have draft/published option on models.
 
-Works with ramdiv-mongo_mapper_acts_as_tree.
-
-NOTE: Since ramdiv-mongo_mapper_acts_as_tree hasn't been updated in a while, I will change this to support Oktavilla/mongo_mapper_tree instead (http://github.com/ramdiv/mongo_mapper_acts_as_tree)
+NOTE: Can have issues with other plugins...
 
 ##Instance methods
 <pre>
