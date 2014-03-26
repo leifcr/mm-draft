@@ -14,7 +14,7 @@ module MongoMapper
       def draft?
         self.draft
       end
-      
+
       def published?
         if draft?
           return false if self.draft_record_published_id == nil # save a query and return false
@@ -24,17 +24,17 @@ module MongoMapper
         end
         false
       end
-      
+
       def publish
-        if (draft? == false) # don't publish non-drafts... 
+        if (draft? == false) # don't publish non-drafts...
           return false
         end
-        
+
         if (self.changed?) # save any changes, in case publish is called directly instead of save
           return false if (self.save == false)
         end
 
-        
+
         # if already published, keep some old data to update instead of insert
         if (self.published?)
           old_published_record = self.published_record
@@ -45,7 +45,7 @@ module MongoMapper
             old_published_record.save
           end
           # destroy old published record... Not ideal, but should work
-          self.published_record.destroy! if self.published_record != nil
+          self.published_record.destroy if self.published_record != nil
           live_record = self.clone
           live_record.created_at = old_published_record.created_at if self.respond_to?("created_at")
         else
@@ -73,13 +73,13 @@ module MongoMapper
             end
           end
         end
-        
+
         live_record.draft = false;
         live_record.updated_at = Time.now.utc if self.respond_to?("updated_at")
         live_record.save!
         return true
       end
-      
+
       def published_record
         if draft?
           return nil if self.draft_record_published_id == nil # save a query and return nil of draft_record_published_id == nil
@@ -96,7 +96,7 @@ module MongoMapper
           self._id
         end
       end
-      
+
       def draft_record
         if draft?
           self
@@ -104,7 +104,7 @@ module MongoMapper
           self.class.all(:conditions => { :draft => true, :draft_record_published_id => self._id }).first
         end
       end
-      
+
       def unpublish
         published_rec = self.published_record
         draft_rec = self.draft_record
