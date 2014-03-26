@@ -40,10 +40,11 @@ module MongoMapper
           old_published_record = self.published_record
           # support for mm-tree
           # remove parents from previous published record
-          if (self.respond_to?("parent_id_field") && self.respond_to?("path_field") && self.respond_to?("depth_field"))
-            old_published_record.parent = nil
-            old_published_record.save
-          end
+          # TREE Support disabled for now
+          # if (self.respond_to?("parent_id_field") && self.respond_to?("path_field") && self.respond_to?("depth_field"))
+          #   old_published_record.parent = nil
+          #   old_published_record.save
+          # end
           # destroy old published record... Not ideal, but should work
           self.published_record.destroy if self.published_record != nil
           live_record = self.clone
@@ -58,21 +59,23 @@ module MongoMapper
         self.save!
         self.class.set_callback(:save, :before, :update_timestamps ) if self.respond_to?("updated_at")
 
-        if (self.respond_to?("parent_id_field") && self.respond_to?("path_field") && self.respond_to?("depth_field"))
-          # if so, remove the current parent (should have already been don)
-          # set parent to nil for live_record before setting "real" parent.
-          # live_record.parent = nil
 
-          if (self.parent != nil)
-            # no need to copy order value, as it's copied in the clone process
-            # check draft.parent.published_record != nil, and set as parent
-            if (self.parent != nil)
-              if (self.parent.published_record != nil)
-                live_record.parent = self.parent.published_record
-              end
-            end
-          end
-        end
+        # TREE Support disabled for now
+        # if (self.respond_to?("parent_id_field") && self.respond_to?("path_field") && self.respond_to?("depth_field"))
+        #   # if so, remove the current parent (should have already been don)
+        #   # set parent to nil for live_record before setting "real" parent.
+        #   # live_record.parent = nil
+
+        #   if (self.parent != nil)
+        #     # no need to copy order value, as it's copied in the clone process
+        #     # check draft.parent.published_record != nil, and set as parent
+        #     if (self.parent != nil)
+        #       if (self.parent.published_record != nil)
+        #         live_record.parent = self.parent.published_record
+        #       end
+        #     end
+        #   end
+        # end
 
         live_record.draft = false;
         live_record.updated_at = Time.now.utc if self.respond_to?("updated_at")
