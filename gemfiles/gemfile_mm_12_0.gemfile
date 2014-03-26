@@ -14,7 +14,7 @@ end
 group :development do
   gem "wirble"
   gem "hirb"
-  gem "awesome_print"  
+  gem "awesome_print"
 end
 
 gem 'mongo_mapper', '~> 0.12.0'
