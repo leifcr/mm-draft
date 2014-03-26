@@ -17,32 +17,32 @@ class DraftTest < Test::Unit::TestCase
     should "be published" do
       @monkey_1.published_record.should_not == nil
     end
-    
+
     should "not have same created time as draft" do
-      @monkey_1.unpublish 
+      @monkey_1.unpublish
       @monkey_1.publish
       @monkey_1.created_at.should_not == @monkey_1.published_record.created_at
     end
-    
+
     should "not be published" do
       @monkey_2.published?.should_not == true
       @monkey_2.published_record.should == nil
     end
-    
+
     should "not be draft" do
       @monkey_1.published_record.draft?.should_not == true
     end
-    
+
     should "be draft" do
       @monkey_2.draft?.should == true
     end
-    
+
     should "rename draft only" do
       @monkey_1.name = "Sagofon"
       @monkey_1.published_record.should_not == nil
       @monkey_1.name.should_not == @monkey_1.published_record.name
     end
-    
+
     should "rename both draft and published record" do
       @monkey_1.name = "Sagofon"
       @monkey_1.publish
@@ -98,15 +98,34 @@ class DraftTest < Test::Unit::TestCase
       Monkey.find(tmp_published_id).should == nil
     end
 
+    should 'get id of the published record on the published record' do
+      @monkey_1.published_record.published_record_id.should == @monkey_1.published_record._id
+      @monkey_1.draft_record_published_id.should == @monkey_1.published_record.published_record_id
+    end
+
+    should 'not be able to publish a published record' do
+      @monkey_1.published_record.publish.should == false
+    end
+
+    should 'return that a published_record is published' do
+      @monkey_1.published_record.published?.should == true
+    end
+
+    should 'return false for published? if a published record has been deleted instead of destroyed' do
+      @monkey_1.published_record.delete
+      @monkey_1.published?.should == false
+    end
+
+
   end # context "draft monkey records" do
-    
+
   # context "tree-record" do
   #   setup do
   #     @root_1     = Dog.create(:name => "Atmel")
   #     @child_1    = Dog.create(:name => "ATmega644P", :parent => @root_1)
   #     @child_2    = Dog.create(:name => "ATmega2561", :parent => @root_1)
   #     @child_2_1  = Dog.create(:name => "ATtiny24", :parent => @child_2)
-  
+
   #     @root_2     = Dog.create(:name => "ST Ericsson")
   #     @child_3    = Dog.create(:name => "ISP1181B", :parent => @root_2)
 
@@ -116,10 +135,10 @@ class DraftTest < Test::Unit::TestCase
   #     @child_2_1.publish
   #     @root_2.publish
   #   end
-    
+
   #   should "test draft record parents" do
   #     assert_equal(@root_2, @child_3.parent)
-  #     assert_equal(@child_2, @child_2_1.parent)     
+  #     assert_equal(@child_2, @child_2_1.parent)
   #   end
 
   #   should "test parents for published records" do
@@ -130,7 +149,7 @@ class DraftTest < Test::Unit::TestCase
 
   #   should "move draft record to new parent, but keep published at old parent" do
   #     @child_2.parent = @root_2
-      
+
   #     assert !@root_2.is_or_is_ancestor_of?(@child_2_1)
   #     assert !@child_2_1.is_or_is_descendant_of?(@root_2)
   #     assert !@root_2.descendants.include?(@child_2_1)
@@ -145,12 +164,12 @@ class DraftTest < Test::Unit::TestCase
   #     # test published against root_1
   #     assert @root_1.published_record.is_or_is_ancestor_of?(@child_2_1.published_record)
   #     assert @child_2_1.published_record.is_or_is_descendant_of?(@root_1.published_record)
-  #     assert @root_1.published_record.descendants.include?(@child_2_1.published_record)     
+  #     assert @root_1.published_record.descendants.include?(@child_2_1.published_record)
   #   end
-    
+
   #   should "move both draft and published record to new parent" do
   #     @child_2.parent = @root_2
-      
+
   #     assert !@root_2.is_or_is_ancestor_of?(@child_2_1)
   #     assert !@child_2_1.is_or_is_descendant_of?(@root_2)
   #     assert !@root_2.descendants.include?(@child_2_1)
@@ -169,10 +188,10 @@ class DraftTest < Test::Unit::TestCase
   #     assert @child_2_1.published_record.is_or_is_descendant_of?(@root_2.published_record)
   #     assert @root_2.published_record.descendants.include?(@child_2_1.published_record)
   #   end
-    
+
   #   should "set a record as a root and check for ancestor" do
   #     @child_2.parent = nil
-      
+
   #     assert !@root_2.is_or_is_ancestor_of?(@child_2_1)
   #     assert !@child_2_1.is_or_is_descendant_of?(@root_2)
   #     assert !@root_2.descendants.include?(@child_2_1)
@@ -189,6 +208,6 @@ class DraftTest < Test::Unit::TestCase
 
   #     assert !@root_1.published_record.is_or_is_ancestor_of?(@child_2_1.published_record)
   #     assert !@child_2_1.published_record.is_or_is_descendant_of?(@root_1.published_record)
-  #     assert !@root_1.published_record.descendants.include?(@child_2_1.published_record)      
+  #     assert !@root_1.published_record.descendants.include?(@child_2_1.published_record)
   #   end
 end

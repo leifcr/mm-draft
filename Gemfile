@@ -7,7 +7,7 @@ gem 'multi_json', '>= 1.3.6'
 group :test do
   gem 'jnunemaker-matchy', '>= 0.4', :require => 'matchy'
   gem 'shoulda',           '>= 3.1.1'
-  gem 'mocha',             '>= 0.12.3'
+  gem 'mocha',             '>= 0.12.3', :require => 'mocha/setup'
   gem 'database_cleaner',  '>= 0.8.0'
 end
 
