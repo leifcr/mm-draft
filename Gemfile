@@ -1,4 +1,4 @@
-source :rubygems
+source 'https://rubygems.org'
 
 gem 'rake'
 gem 'bson_ext', '>= 1.6.4'
@@ -17,4 +17,4 @@ group :development do
   gem "awesome_print"  
 end
 
-gemspec
+gem 'mongo_mapper', '0.13.0.beta2'

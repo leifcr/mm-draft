@@ -15,5 +15,5 @@ Gem::Specification.new do |s|
   s.test_files                    = Dir.glob('test/**/*')
 
   s.add_dependency 'i18n'
-  s.add_dependency 'mongo_mapper', '~> 0.12.0'
+  s.add_dependency 'mongo_mapper'
 end
