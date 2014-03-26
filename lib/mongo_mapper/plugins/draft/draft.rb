@@ -26,9 +26,7 @@ module MongoMapper
       end
 
       def publish
-        if (draft? == false) # don't publish non-drafts...
-          return false
-        end
+        return false if (draft? == false) # don't publish non-drafts...
 
         if (self.changed?) # save any changes, in case publish is called directly instead of save
           return false if (self.save == false)
