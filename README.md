@@ -7,17 +7,19 @@ Plugin for MongoMapper to have draft/published option on models.
 NOTE: Can have issues with other plugins...
 
 ##Instance methods
-<pre>
+
+```
 .draft?           - true/false
 .published?       - true/false
 .published_record - returns the published record) (or nil, if the document never has been published)
 .draft_record     - returns the draft record for a published record
-</pre>
+```
 
 *draft_record* will return self if the draft? returns true
 *published_record* will return self if draft? returns false
 
 ## Usage:
+
 Create record as normal.
 
 *.save* - Saves draft (with normal validation)
@@ -33,16 +35,19 @@ Duplicating the records also gives the benefit of working directly on the publis
 ## Example
 
 ### Model
-<pre>
+
+```ruby
 class Monkey
   include MongoMapper::Document
   plugin MongoMapper::Draft
 
   key :name, String, :default => "test"
 end
-</pre>
+```
+
 ### Usage of model
-<pre>
+
+```ruby
 m = Monkey.new
 m.name = "Leif"
 m.save
@@ -56,7 +61,7 @@ m.save
 m.name # returns "Artn"
 
 m.published_model.name # returns "Leif"
-</pre>
+```
 
 
 Copyright (c) 2011 Leif Ringstad, released under the MIT license
