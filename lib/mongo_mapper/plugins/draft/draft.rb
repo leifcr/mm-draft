@@ -33,9 +33,9 @@ module MongoMapper
         end
 
 
-        # if already published, keep some old data to update instead of insert
+        # if already published, update the record
         if (self.published?)
-          old_published_record = self.published_record
+          # old_published_record = self.published_record
           # support for mm-tree
           # remove parents from previous published record
           # TREE Support disabled for now
@@ -44,19 +44,31 @@ module MongoMapper
           #   old_published_record.save
           # end
           # destroy old published record... Not ideal, but should work
-          self.published_record.destroy if self.published_record != nil
+          # self.published_record.destroy if self.published_record != nil
+          # live_record = self.clone
+          # live_record.created_at = old_published_record.created_at if self.respond_to?("created_at")
+          update_attribs = self.attributes.clone
+          ["_id", "created_at", "updated_at"].each do |rmkey|
+            update_attribs.delete(rmkey)
+          end
+          update_attribs["draft"] = false
+          update_attribs["draft_record_published_id"] = nil
+          live_record = self.published_record
+          live_record.update_attributes!(update_attribs)
+        else # clone the record
+
           live_record = self.clone
-          live_record.created_at = old_published_record.created_at if self.respond_to?("created_at")
-        else
-          live_record = self.clone
-          live_record.created_at = Time.now.utc if self.respond_to?("created_at")
+          if self.respond_to?("created_at")
+            time_proc = lambda { Time.now.utc }
+            live_record.created_at = time_proc.call
+          end
+          live_record.draft_record_published_id = nil
+          live_record.draft = false
+          live_record.save!
         end
 
-        self.draft_record_published_id = live_record._id
-        self.class.skip_callback(:save, :before, :update_timestamps ) if self.respond_to?("updated_at")
-        self.save!
-        self.class.set_callback(:save, :before, :update_timestamps ) if self.respond_to?("updated_at")
-
+        self.set(draft_record_published_id: live_record._id)
+        self.reload
 
         # TREE Support disabled for now
         # if (self.respond_to?("parent_id_field") && self.respond_to?("path_field") && self.respond_to?("depth_field"))
@@ -75,9 +87,6 @@ module MongoMapper
         #   end
         # end
 
-        live_record.draft = false;
-        live_record.updated_at = Time.now.utc if self.respond_to?("updated_at")
-        live_record.save!
         return true
       end
 
