@@ -10,7 +10,7 @@ namespace :test do
     test.libs << 'test'
     test.ruby_opts << '-rubygems'
     test.pattern = 'test/unit/**/test_*.rb'
-    test.verbose = true 
+    test.verbose = true
   end
 
 #TODO Add performance
@@ -18,7 +18,7 @@ namespace :test do
     test.libs << 'test'
     test.ruby_opts << '-rubygems'
     test.pattern = 'test/performance/test/**/*.rb'
-    test.verbose = true 
+    test.verbose = true
   end
 end
 
