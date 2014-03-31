@@ -118,6 +118,19 @@ class DraftTest < Test::Unit::TestCase
 
 
   end # context "draft monkey records" do
+  context "draft dog records with pubished_at" do
+    setup do
+      @monkey_1   = Dog.create(:name => "Chip")
+    end
+
+    should "should set published_at when publishing" do
+      @monkey_1.publish
+      @monkey_1.published_record.should_not                  == nil
+      @monkey_1.published_at.should_not                      == nil
+      @monkey_1.published_record.published_at.should_not     == nil
+      @monkey_1.published_record.published_at.should         == @monkey_1.published_at
+    end
+  end
 
   # context "tree-record" do
   #   setup do

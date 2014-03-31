@@ -62,6 +62,14 @@ module MongoMapper
             time_proc = lambda { Time.now.utc }
             live_record.created_at = time_proc.call
           end
+
+          if self.respond_to?("published_at")
+            time_proc = lambda { Time.now.utc }
+            tmp_time = time_proc.call
+            self.set(published_at: tmp_time)
+            live_record.published_at = tmp_time
+          end
+
           live_record.draft_record_published_id = nil
           live_record.draft = false
           live_record.save!
