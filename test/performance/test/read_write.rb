@@ -7,10 +7,10 @@ DatabaseCleaner.start
 Benchmark.bm(22) do |x|
   ids_draft = []
   ids_no_draft = []
-  
+
   # Write performance
   x.report("write without draft  ") do
-    500.times { |i| ids_no_draft << MonkeyNodraft.create(:name => "Baboo", :age => 12, ).id }
+    500.times { |i| ids_no_draft << MonkeyNoDraft.create(:name => "Baboo", :age => 12, ).id }
   end
   x.report("write with draft     ") do
     500.times { |i| ids_draft << Monkey.create(:name => "Baboo", :age => 12, ).id }
@@ -21,7 +21,7 @@ Benchmark.bm(22) do |x|
     ids_draft.each { |id| Monkey.first(:id => id) }
   end
   x.report("read without draft   ") do
-    ids_no_draft.each { |id| MonkeyNodraft.first(:id => id) }
+    ids_no_draft.each { |id| MonkeyNoDraft.first(:id => id) }
   end
 end
 
