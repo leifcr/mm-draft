@@ -17,4 +17,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'i18n'
   s.add_dependency 'mongo_mapper'
+
+  s.add_development_dependency("rspec", [">= 0"])
+  s.add_development_dependency("timecop", [">= 0"])
+
 end

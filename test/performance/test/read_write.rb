@@ -26,3 +26,4 @@ Benchmark.bm(22) do |x|
 end
 
 DatabaseCleaner.clean
+MongoMapper.database.command({dropDatabase: 1})

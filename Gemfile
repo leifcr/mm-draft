@@ -5,10 +5,9 @@ gem 'bson_ext', '>= 1.6.4'
 gem 'multi_json', '>= 1.3.6'
 
 group :test do
-  gem 'jnunemaker-matchy', '>= 0.4', :require => 'matchy'
-  gem 'shoulda',           '>= 3.1.1'
-  gem 'mocha',             '>= 0.12.3', :require => 'mocha/setup'
+  gem 'rspec', "~> 2.8"
   gem 'database_cleaner',  '>= 0.8.0'
+  gem 'timecop'
 end
 
 group :development, :test do
@@ -16,4 +15,4 @@ group :development, :test do
   gem 'simplecov', :require => false
 end
 
-gem 'mongo_mapper', '> 0.12'
+gem 'mongo_mapper', '0.13.0.beta2'
