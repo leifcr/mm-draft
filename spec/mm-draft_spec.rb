@@ -146,6 +146,14 @@ describe "MongoMapper::Plugins::draft" do
       end
       @dog.published_record.published_at.should_not        == time
     end
+    
+    it "should unset published_t when unpublishing" do 
+      @dog.publish
+      @dog.published_at.should_not == nil
+      @dog.unpublish
+      @dog.published_at.should     == nil
+    end
+    
   end
 
 end # describe "MongoMapper::Plugins::draft" do
