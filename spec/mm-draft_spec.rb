@@ -152,8 +152,8 @@ describe "MongoMapper::Plugins::draft" do
       @dog.publish
       @dog.reload
       @dog.published_at.should_not == nil
-      @dog.reload
       @dog.unpublish
+      @dog.reload
       @dog.published_at.should     == nil
     end
     
