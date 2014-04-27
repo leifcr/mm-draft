@@ -68,6 +68,7 @@ describe "MongoMapper::Plugins::draft" do
 
     it "should unpublish draft record" do
       @monkey_1.unpublish
+      @monkey_1.reload
       @monkey_1.published?.should_not      == true
       @monkey_1.published_record_id.should == nil
       @monkey_1.published_record.should    == nil
@@ -149,7 +150,9 @@ describe "MongoMapper::Plugins::draft" do
     
     it "should unset published_t when unpublishing" do 
       @dog.publish
+      @dog.reload
       @dog.published_at.should_not == nil
+      @dog.reload
       @dog.unpublish
       @dog.published_at.should     == nil
     end
