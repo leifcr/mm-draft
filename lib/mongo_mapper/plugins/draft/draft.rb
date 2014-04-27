@@ -125,22 +125,13 @@ module MongoMapper
 
       def unpublish
         published_rec = self.published_record
-        draft_rec = self.draft_record
+        draft_rec     = self.draft_record
 
         self.class.skip_callback(:destroy, :before, :unpublish)
         published_rec.destroy if published_rec != nil # destroy published record
         self.class.set_callback(:destroy, :before, :unpublish)
-
-        draft_rec.draft_record_published_id = nil if draft_rec != nil # update draft record
-        draft_rec.save! if draft_rec != nil
-        # if draft?
-        #   published = self.class.find(self.draft_record_published_id)
-        #   published.destroy if (published != nil)
-        #   self.draft_record_published_id = nil
-        #   self.save! # remove draft_record_published_id
-        # else
-        #   self.draft_record.unpublish
-        # end
+        draft_rec.set(published_at: nil) if self.respond_to?("published_at")
+        draft_rec.set(draft_record_published_id: nil)
       end
 
     end # Module Draft
