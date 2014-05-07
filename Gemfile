@@ -15,4 +15,4 @@ group :development, :test do
   gem 'simplecov', :require => false
 end
 
-gem 'mongo_mapper', '0.13.0.beta2'
+gem 'mongo_mapper', '0.13.0'
