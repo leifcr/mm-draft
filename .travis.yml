@@ -1,7 +1,7 @@
 gemfile:
   - gemfiles/gemfile_mm_12_0.gemfile
   - gemfiles/gemfile_mm_13_0.gemfile
-  - gemfiles/gemfile_mm_13_0_rails_4_0.gemfile
+  - gemfiles/gemfile_mm_13_0_rails_4_1.gemfile
 language: ruby
 rvm:
   - 1.9.3
