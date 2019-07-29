@@ -1,4 +1,7 @@
 # MongoMapper Draft plugin
+
+NOTE: No longer maintained, as mongomapper is no longer maintained.
+
 [![Build Status](https://travis-ci.org/leifcr/mm-draft.svg?branch=master)](https://travis-ci.org/leifcr/mm-draft) [![Coverage Status](https://coveralls.io/repos/leifcr/mm-draft/badge.png)](https://coveralls.io/r/leifcr/mm-draft) [![Dependency Status](https://gemnasium.com/leifcr/mm-draft.svg)](https://gemnasium.com/leifcr/mm-draft)
 
 
